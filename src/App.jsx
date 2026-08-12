@@ -41,7 +41,7 @@ function App() {
   useEffect(() => {
     const fetchCryptoData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/crypto');
+        const response = await axios.get('https://final-year-project-n12c.onrender.com/api/crypto');
         setCryptoData(response.data);
         
         // Save the fresh data to local storage for offline use
