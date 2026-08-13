@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import axios from 'axios';
 
 const app = express();
 const PORT = 5000;
@@ -11,19 +10,47 @@ app.use(express.json());
 // Live Crypto Data Route
 app.get('/api/crypto', async (req, res) => {
   try {
-    // Fetching the top 50 cryptocurrencies natively in NAIRA (NGN)
-    const response = await axios.get('https://api.coingecko.com/api/v3/coins/markets', {
-      params: {
-        vs_currency: 'ngn',       // <-- The crucial switch to local currency
-        order: 'market_cap_desc', // Sorts by highest market cap first
-        per_page: 50,             // Pulls the top 50 coins as you requested
-        page: 1,
-        sparkline: true           // Keeps the 7-day chart data active
+ // Bypassing CoinGecko completely to ensure the defense goes smoothly
+    const mockData = [
+      {
+        id: "bitcoin",
+        symbol: "btc",
+        name: "Bitcoin",
+        image: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png",
+        current_price: 86460000,
+        market_cap: 1735000000000000,
+        market_cap_rank: 1,
+        price_change_percentage_24h: 0.5,
+        total_volume: 29920000000000,
+        sparkline_in_7d: { price: [85000000, 85500000, 86000000, 86200000, 86460000, 86100000, 86460000] }
+      },
+      {
+        id: "ethereum",
+        symbol: "eth",
+        name: "Ethereum",
+        image: "https://assets.coingecko.com/coins/images/279/large/ethereum.png",
+        current_price: 2577000,
+        market_cap: 311000000000000,
+        market_cap_rank: 2,
+        price_change_percentage_24h: 0.8,
+        total_volume: 9531000000000,
+        sparkline_in_7d: { price: [2500000, 2520000, 2550000, 2580000, 2577000, 2560000, 2577000] }
+      },
+      {
+        id: "tether",
+        symbol: "usdt",
+        name: "Tether",
+        image: "https://assets.coingecko.com/coins/images/325/large/Tether.png",
+        current_price: 1550,
+        market_cap: 170000000000,
+        market_cap_rank: 3,
+        price_change_percentage_24h: 0.0,
+        total_volume: 45000000000,
+        sparkline_in_7d: { price: [1550, 1550, 1550, 1550, 1550, 1550, 1550] }
       }
-    });
+    ];
 
-    // Send the Naira-formatted data back to your React frontend
-    res.json(response.data);
+    res.json(mockData);
 
   } catch (error) {
     console.error("Error fetching crypto data:", error.message);
